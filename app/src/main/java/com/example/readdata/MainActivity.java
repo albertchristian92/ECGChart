@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
                                 addEntry();
                                 datacounter++;
                                 counter++;
-                                System.out.println("counter = "+counter+"row counter" + rowcounter);
+//                                System.out.println("counter = "+counter+"row counter" + rowcounter);
 
                             }
                             else{
