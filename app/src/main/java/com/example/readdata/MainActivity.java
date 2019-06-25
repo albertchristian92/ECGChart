@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
     private static final Random RANDOM = new Random();
     private LineGraphSeries<DataPoint> series;
     private int lastX = 0;
-    private int rowcounter=0;
+    private int rowcounter,datacounter=0;
     private  List list;
     private String[] temp;
     private int counter;
@@ -40,7 +40,6 @@ public class MainActivity extends Activity {
         CSVFile csvFile = new CSVFile(inputStream);
         list = csvFile.read();
         temp = (String[]) list.get(rowcounter);
-
         GraphView graph = (GraphView) findViewById(R.id.graph);
         graph.getGridLabelRenderer().setGridStyle( GridLabelRenderer.GridStyle.NONE );
         // data
@@ -72,19 +71,21 @@ public class MainActivity extends Activity {
                             if(counter <temp.length-1)
                             {
                                 addEntry();
+                                datacounter++;
                                 counter++;
+                                System.out.println("counter = "+counter+"row counter" + rowcounter);
+
                             }
                             else{
                                 rowcounter++;
                                 counter=0;
-
                             }
                         }
                     });
 
                     // sleep to slow down the add of entries
                     try {
-                        Thread.sleep(360);
+                        Thread.sleep(60);
                     } catch (InterruptedException e) {
                         // manage error ...
                     }
@@ -93,12 +94,14 @@ public class MainActivity extends Activity {
         }).start();
     }
 
-    // add random data to graph
+    // add  data to graph
     private void addEntry() {
     Double dataInput;
+    temp = (String[]) list.get(rowcounter);
+    System.out.println(Arrays.toString(temp));
     dataInput = Double.parseDouble(temp[counter]);
         // here, we choose to display max 10 points on the viewport and we scroll to end
-        series.appendData(new DataPoint(lastX++, dataInput), false, 21892);
+       series.appendData(new DataPoint(lastX++, dataInput), false, 21892);
 
     }
 
